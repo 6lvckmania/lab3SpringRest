@@ -1,6 +1,12 @@
 package ua.kpi.its.lab.rest.repository
 
 import org.springframework.data.jpa.repository.JpaRepository
-import ua.kpi.its.lab.rest.entity.EntityExample
+import org.springframework.stereotype.Repository
+import ua.kpi.its.lab.rest.entity.SoftwareModule
+import ua.kpi.its.lab.rest.entity.SoftwareProduct
 
-interface RepositoryExample : JpaRepository<EntityExample, Long>
+@Repository
+interface SoftwareModuleRepository : JpaRepository<SoftwareModule, Long>
+
+@Repository
+interface SoftwareProductRepository : JpaRepository<SoftwareProduct, Long>

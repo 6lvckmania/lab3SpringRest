@@ -1,17 +1,69 @@
 package ua.kpi.its.lab.rest.controller
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import ua.kpi.its.lab.rest.dto.ExampleRequest
-import ua.kpi.its.lab.rest.dto.ExampleResponse
-import ua.kpi.its.lab.rest.svc.ServiceExample
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import ua.kpi.its.lab.rest.dto.*
+import ua.kpi.its.lab.rest.entity.*
+import ua.kpi.its.lab.rest.svc.*
 
 @RestController
-class ExampleController @Autowired constructor(
-    private val serviceExample: ServiceExample
-) {
-    @PostMapping("/example")
-    fun createExample(@RequestBody request: ExampleRequest): ExampleResponse = serviceExample.createEntity(request)
+@RequestMapping("/api/software-modules")
+class SoftwareModuleController(private val softwareModuleService: SoftwareModuleService) {
+
+    @PostMapping("/modules")
+    fun create(@RequestBody softwareModuleRequest: SoftwareModuleRequest): ResponseEntity<SoftwareModule> {
+        val createdSoftwareModule = softwareModuleService.createModule(softwareModuleRequest)
+        return ResponseEntity.ok(createdSoftwareModule)
+    }
+
+    @GetMapping("/modules/{id}")
+    fun getById(@PathVariable id: Long): ResponseEntity<SoftwareModule?> {
+        val softwareModule = softwareModuleService.getModuleById(id)
+        return ResponseEntity.ok(softwareModule)
+    }
+
+    @PutMapping("/modules/{id}")
+    fun update(@PathVariable id: Long, @RequestBody softwareModuleRequest: SoftwareModuleRequest): ResponseEntity<SoftwareModule> {
+        val updatedSoftwareModule = softwareModuleService.updateModule(id, softwareModuleRequest)
+        return ResponseEntity.ok(updatedSoftwareModule)
+    }
+
+    @DeleteMapping("/modules/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+        softwareModuleService.deleteModule(id)
+        return ResponseEntity.noContent().build()
+    }
 }
+
+@RestController
+@RequestMapping("/api/software-products")
+class SoftwareProductController(private val softwareProductService: SoftwareProductService) {
+
+    @PostMapping("/products")
+    fun create(@RequestBody softwareProductRequest: SoftwareProductRequest): ResponseEntity<SoftwareProduct> {
+        val createdSoftwareProduct = softwareProductService.createProduct(softwareProductRequest)
+        return ResponseEntity.ok(createdSoftwareProduct)
+    }
+
+    @GetMapping("/products/{id}")
+    fun getById(@PathVariable id: Long): ResponseEntity<SoftwareProduct?> {
+        val softwareProduct = softwareProductService.getProductById(id)
+        return ResponseEntity.ok(softwareProduct)
+    }
+
+    @PutMapping("/products/{id}")
+    fun update(@PathVariable id: Long, @RequestBody softwareProductRequest: SoftwareProductRequest): ResponseEntity<SoftwareProduct> {
+        val updatedSoftwareProduct = softwareProductService.updateProduct(id, softwareProductRequest)
+        return ResponseEntity.ok(updatedSoftwareProduct)
+    }
+
+    @DeleteMapping("/products/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+        softwareProductService.deleteProduct(id)
+        return ResponseEntity.noContent().build()
+    }
+}
+
