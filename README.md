@@ -1,4 +1,4 @@
-# Spring Rest Hibernate Lab Template
+# Spring Rest Hibernate Lab
 
 To call an example controller use:
 ```bash
