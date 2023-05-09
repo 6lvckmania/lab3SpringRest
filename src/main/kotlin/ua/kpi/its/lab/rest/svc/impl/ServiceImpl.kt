@@ -1,5 +1,6 @@
 package ua.kpi.its.lab.rest.svc.impl
 
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Service
 import ua.kpi.its.lab.rest.dto.SoftwareModuleRequest
 import ua.kpi.its.lab.rest.dto.SoftwareProductRequest
@@ -15,6 +16,7 @@ class SoftwareModuleServiceImpl(
     private val moduleRepository: SoftwareModuleRepository
 ) : SoftwareModuleService {
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun createModule(module: SoftwareModuleRequest): SoftwareModule {
         val softwareModule = SoftwareModule(
             description = module.description,
@@ -28,10 +30,12 @@ class SoftwareModuleServiceImpl(
         return moduleRepository.save(softwareModule)
     }
 
+    @PreAuthorize("permitAll()")
     override fun getModuleById(id: Long): SoftwareModule? {
         return moduleRepository.findById(id).orElse(null)
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun updateModule(id: Long, module: SoftwareModuleRequest): SoftwareModule {
         val softwareModule = moduleRepository.findById(id).orElse(null)
             ?: throw RuntimeException("SoftwareModule not found with id: $id")
@@ -45,10 +49,12 @@ class SoftwareModuleServiceImpl(
         return moduleRepository.save(softwareModule)
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun deleteModule(id: Long) {
         moduleRepository.deleteById(id)
     }
 
+    @PreAuthorize("permitAll()")
     override fun getAllModules(): List<SoftwareModule> {
         return moduleRepository.findAll()
     }
@@ -59,6 +65,7 @@ class SoftwareProductServiceImpl(
     private val productRepository: SoftwareProductRepository
 ) : SoftwareProductService {
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun createProduct(product: SoftwareProductRequest): SoftwareProduct {
         val softwareProduct = SoftwareProduct(
             name = product.name,
@@ -72,10 +79,12 @@ class SoftwareProductServiceImpl(
         return productRepository.save(softwareProduct)
     }
 
+    @PreAuthorize("permitAll()")
     override fun getProductById(id: Long): SoftwareProduct? {
         return productRepository.findById(id).orElse(null)
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun updateProduct(id: Long, product: SoftwareProductRequest): SoftwareProduct {
         val softwareProduct = productRepository.findById(id).orElse(null)
             ?: throw RuntimeException("SoftwareProduct not found with id: $id")
@@ -89,10 +98,12 @@ class SoftwareProductServiceImpl(
         return productRepository.save(softwareProduct)
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     override fun deleteProduct(id: Long) {
         productRepository.deleteById(id)
     }
 
+    @PreAuthorize("permitAll()")
     override fun getAllProducts(): List<SoftwareProduct> {
         return productRepository.findAll()
     }

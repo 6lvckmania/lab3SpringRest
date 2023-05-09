@@ -1,9 +1,17 @@
-# Spring Rest Hibernate Lab Template
+# Spring REST lab
 
-To call an example controller use:
+* Perform an HTTP GET request
 ```bash
-curl -X POST \
-  http://localhost:8080/api/software-modules/modules \
+curl http://localhost:8080/
+```
+* Get the HTTP response headers
+```bash
+curl -i http://localhost:8080/
+```
+* Perform an HTTP POST request passing data URL
+```bash
+curl -X POST http://localhost:8080/api/software-modules/modules \
+  -u editor:password \
   -H 'Content-Type: application/json' \
   -d '{ \
     "description": "Module 1", \
@@ -17,4 +25,11 @@ curl -X POST \
       "id": 100 \
     } \
   }'
+```
+* Get data by different users
+```bash
+curl -X GET http://localhost:8080/api/software-modules/modules/1 -u editor:password
+```
+```bash
+curl -X GET http://localhost:8080/api/software-modules/modules/1 -u viewer:password
 ```

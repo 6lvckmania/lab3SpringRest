@@ -41,6 +41,10 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
 
+    // Security
+    implementation("org.springframework.security:spring-security-config:6.0.3")
+    implementation("org.springframework.security:spring-security-web:6.0.3")
+
 
     testImplementation(kotlin("test"))
 }
